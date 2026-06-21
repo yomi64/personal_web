@@ -1,0 +1,34 @@
+.xp-desktop {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #5a8fdc 0%, #3d6fc4 35%, #2f9e44 75%, #1f7a30 100%);
+  font-family: Tahoma, Verdana, "Segoe UI", sans-serif;
+  position: relative;
+}
+
+.xp-icon {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: grab;
+}
+
+.xp-icon.is-dragging {
+  cursor: grabbing;
+  z-index: 10;
+}
+
+.xp-icon-image {
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+}
+
+.xp-icon-label {
+  font-size: 12px;
+}

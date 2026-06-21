@@ -6,6 +6,9 @@ export default function Window({ title }) {
   const [dragStart, setDragStart] = useState(null);
 
   function handleTitleBarMouseDown(e) {
+    // Don't start a drag if a control button was clicked
+    if (e.target.closest("button")) return;
+
     setDragStart({
       startMouseX: e.clientX,
       startMouseY: e.clientY,
@@ -39,6 +42,14 @@ export default function Window({ title }) {
     };
   }, [dragStart]);
 
+  function handleMinimize() {
+    console.log("minimize clicked");
+  }
+
+  function handleClose() {
+    console.log("close clicked");
+  }
+
   return (
     <div
       className="xp-window"
@@ -46,6 +57,22 @@ export default function Window({ title }) {
     >
       <div className="xp-titlebar" onMouseDown={handleTitleBarMouseDown}>
         <span className="xp-titlebar-text">{title}</span>
+        <div className="xp-titlebar-controls">
+          <button
+            className="xp-btn xp-btn-minimize"
+            aria-label={`Minimize ${title}`}
+            onClick={handleMinimize}
+          >
+            &#x2013;
+          </button>
+          <button
+            className="xp-btn xp-btn-close"
+            aria-label={`Close ${title}`}
+            onClick={handleClose}
+          >
+            &#x2715;
+          </button>
+        </div>
       </div>
       <div className="xp-window-content">
         Window content goes here.

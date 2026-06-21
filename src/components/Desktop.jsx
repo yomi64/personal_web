@@ -11,7 +11,7 @@ const INITIAL_ICONS = [
 const CELL_WIDTH = 80;
 const CELL_HEIGHT = 90;
 
-export default function Desktop() {
+export default function Desktop({ onOpenWindow }) {
   const [icons, setIcons] = useState(INITIAL_ICONS);
   const [dragState, setDragState] = useState(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -113,6 +113,7 @@ export default function Desktop() {
             key={item.id}
             className={`xp-icon ${isDragging ? "is-dragging" : ""}`}
             onMouseDown={(e) => handleMouseDown(e, item)}
+            onDoubleClick={() => onOpenWindow(item.id)}
             style={{
               left: isDragging ? baseLeft + dragOffset.x : baseLeft,
               top: isDragging ? baseTop + dragOffset.y : baseTop,

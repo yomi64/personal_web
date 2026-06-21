@@ -1,14 +1,22 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./Window.css";
 
-export default function Window({ title }) {
-  const [position, setPosition] = useState({ x: 150, y: 100 });
+export default function Window({
+  title,
+  position,
+  zIndex,
+  isFocused,
+  onPositionChange,
+  onFocus,
+  onClose,
+  onMinimize,
+}) {
   const [dragStart, setDragStart] = useState(null);
 
   function handleTitleBarMouseDown(e) {
-    // Don't start a drag if a control button was clicked
     if (e.target.closest("button")) return;
 
+    onFocus();
     setDragStart({
       startMouseX: e.clientX,
       startMouseY: e.clientY,
@@ -23,7 +31,7 @@ export default function Window({ title }) {
     function handleMouseMove(e) {
       const dx = e.clientX - dragStart.startMouseX;
       const dy = e.clientY - dragStart.startMouseY;
-      setPosition({
+      onPositionChange({
         x: dragStart.startX + dx,
         y: dragStart.startY + dy,
       });
@@ -42,18 +50,11 @@ export default function Window({ title }) {
     };
   }, [dragStart]);
 
-  function handleMinimize() {
-    console.log("minimize clicked");
-  }
-
-  function handleClose() {
-    console.log("close clicked");
-  }
-
   return (
     <div
-      className="xp-window"
-      style={{ left: position.x, top: position.y, width: 400, height: 300 }}
+      className={`xp-window ${isFocused ? "is-focused" : ""}`}
+      style={{ left: position.x, top: position.y, width: 400, height: 300, zIndex }}
+      onMouseDown={onFocus}
     >
       <div className="xp-titlebar" onMouseDown={handleTitleBarMouseDown}>
         <span className="xp-titlebar-text">{title}</span>
@@ -61,14 +62,14 @@ export default function Window({ title }) {
           <button
             className="xp-btn xp-btn-minimize"
             aria-label={`Minimize ${title}`}
-            onClick={handleMinimize}
+            onClick={onMinimize}
           >
             &#x2013;
           </button>
           <button
             className="xp-btn xp-btn-close"
             aria-label={`Close ${title}`}
-            onClick={handleClose}
+            onClick={onClose}
           >
             &#x2715;
           </button>

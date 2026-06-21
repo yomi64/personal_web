@@ -1,9 +1,7 @@
+import Desktop from "./components/Desktop.jsx";
+
 function App() {
-  return (
-    <div style={{ width: "100%", height: "100%", background: "blue" }}>
-      Hello desktop
-    </div>
-  );
+  return <Desktop />;
 }
 
 export default App;

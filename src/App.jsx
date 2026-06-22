@@ -20,6 +20,18 @@ function App() {
     );
   }
 
+  function handleTaskbarButtonClick(id) {
+    const targetWindow = windows.find((w) => w.id === id);
+    const isCurrentlyActive =
+      !targetWindow.isMinimized && targetWindow.zIndex === topZIndex;
+
+    if (isCurrentlyActive) {
+      minimizeWindow(id);
+    } else {
+      restoreWindow(id);
+    }
+  }
+
   function focusWindow(id) {
     const nextZ = topZIndex + 1;
     setTopZIndex(nextZ);
@@ -48,11 +60,28 @@ function App() {
   }
 
   function minimizeWindow(id) {
-    setWindows((prevWindows) =>
-      prevWindows.map((w) =>
+    setWindows((prevWindows) => {
+      const updated = prevWindows.map((w) =>
         w.id === id ? { ...w, isMinimized: true } : w
-      )
-    );
+      );
+
+      const wasFocused = prevWindows.find((w) => w.id === id)?.zIndex === topZIndex;
+      if (wasFocused) {
+        const stillVisible = updated.filter((w) => w.isOpen && !w.isMinimized);
+        if (stillVisible.length > 0) {
+          const nextFocused = stillVisible.reduce((highest, w) =>
+            w.zIndex > highest.zIndex ? w : highest
+          );
+          const nextZ = topZIndex + 1;
+          setTopZIndex(nextZ);
+          return updated.map((w) =>
+            w.id === nextFocused.id ? { ...w, zIndex: nextZ } : w
+          );
+        }
+      }
+
+      return updated;
+    });
   }
 
   function restoreWindow(id) {
@@ -85,7 +114,7 @@ function App() {
         <Taskbar
           windows={windows}
           topZIndex={topZIndex}
-          onTaskbarButtonClick={restoreWindow}
+          onTaskbarButtonClick={handleTaskbarButtonClick}
         />
     </div>
   );

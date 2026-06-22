@@ -55,6 +55,15 @@ function App() {
     );
   }
 
+  function restoreWindow(id) {
+    setWindows((prevWindows) =>
+      prevWindows.map((w) =>
+        w.id === id ? { ...w, isMinimized: false } : w
+      )
+    );
+    focusWindow(id);
+  }
+
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <Desktop onOpenWindow={openWindow} />
@@ -73,7 +82,11 @@ function App() {
             onMinimize={() => minimizeWindow(w.id)}
           />
         ))}
-        <Taskbar />
+        <Taskbar
+          windows={windows}
+          topZIndex={topZIndex}
+          onTaskbarButtonClick={restoreWindow}
+        />
     </div>
   );
 }

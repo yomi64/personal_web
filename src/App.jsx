@@ -6,8 +6,8 @@ import StartMenu from "./components/StartMenu.jsx";
 
 
 const INITIAL_WINDOWS = [
-  { id: "about", title: "About Me.txt", position: { x: 120, y: 80 }, zIndex: 1, isOpen: true, isMinimized: false },
-  { id: "projects", title: "My Projects", position: { x: 220, y: 140 }, zIndex: 2, isOpen: true, isMinimized: false },
+  { id: "about", title: "About Me.txt", icon: "/icons/Generic_Text_Document.png", position: { x: 120, y: 80 }, zIndex: 1, isOpen: true, isMinimized: false },
+  { id: "projects", title: "My Projects", icon: "/icons/Packager.png", position: { x: 220, y: 140 }, zIndex: 2, isOpen: true, isMinimized: false },
 ];
 
 function App() {
@@ -97,7 +97,10 @@ function App() {
   }
 
   return (
-    <div style={{ width: "100%", height: "100%", position: "relative" }}>
+    <div
+      style={{ width: "100%", height: "100%", position: "relative" }}
+      onClick={() => setIsStartOpen(false)}
+    >
       <Desktop onOpenWindow={openWindow} />
       {windows
         .filter((w) => w.isOpen && !w.isMinimized)
@@ -105,6 +108,7 @@ function App() {
           <Window
             key={w.id}
             title={w.title}
+            icon={w.icon}
             position={w.position}
             zIndex={w.zIndex}
             isFocused={w.zIndex === topZIndex}
@@ -118,7 +122,10 @@ function App() {
           windows={windows}
           topZIndex={topZIndex}
           onTaskbarButtonClick={handleTaskbarButtonClick}
-          onStartClick={() => setIsStartOpen((open) => !open)}
+          onStartClick={(e) => {
+            e.stopPropagation();
+            setIsStartOpen((open) => !open);
+          }}
         />
         {isStartOpen && (
           <StartMenu

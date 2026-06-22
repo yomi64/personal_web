@@ -64,3 +64,22 @@
 .xp-btn-close:hover {
   background: linear-gradient(to bottom, #ff9c8e, #e8473a);
 }
+
+.xp-titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.xp-titlebar-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.xp-titlebar-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

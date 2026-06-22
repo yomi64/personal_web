@@ -3,6 +3,7 @@ import "./Window.css";
 
 export default function Window({
   title,
+  icon,
   position,
   zIndex,
   isFocused,
@@ -57,7 +58,10 @@ export default function Window({
       onMouseDown={onFocus}
     >
       <div className="xp-titlebar" onMouseDown={handleTitleBarMouseDown}>
-        <span className="xp-titlebar-text">{title}</span>
+        <div className="xp-titlebar-left">
+          <img src={icon} alt="" className="xp-titlebar-icon" />
+          <span className="xp-titlebar-text">{title}</span>
+        </div>
         <div className="xp-titlebar-controls">
           <button
             className="xp-btn xp-btn-minimize"

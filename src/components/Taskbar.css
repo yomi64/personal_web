@@ -25,6 +25,17 @@
   cursor: pointer;
 }
 
+.xp-taskbar-app-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.xp-taskbar-app-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .xp-taskbar-apps {
   flex: 1;
   display: flex;
@@ -48,6 +59,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
+  gap: 6px;
 }
 
 .xp-taskbar-app.is-active {

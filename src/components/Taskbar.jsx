@@ -17,7 +17,8 @@ export default function Taskbar({ windows, topZIndex, onTaskbarButtonClick, onSt
               className={`xp-taskbar-app ${isActive ? "is-active" : ""}`}
               onClick={() => onTaskbarButtonClick(w.id)}
             >
-              {w.title}
+              <img src={w.icon} alt="" className="xp-taskbar-app-icon" />
+              <span className="xp-taskbar-app-label">{w.title}</span>
             </button>
           );
         })}

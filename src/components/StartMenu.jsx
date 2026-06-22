@@ -7,7 +7,7 @@ const START_MENU_APPS = [
 
 export default function StartMenu({ onOpenApp, onClose }) {
   return (
-    <div className="xp-start-menu">
+    <div className="xp-start-menu" onClick={(e) => e.stopPropagation()}>
       <div className="xp-start-menu-header">Your Name</div>
 
       <div className="xp-start-menu-columns">

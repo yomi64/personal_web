@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Desktop from "./components/Desktop.jsx";
 import Window from "./components/Window.jsx";
+import Taskbar from "./components/Taskbar.jsx";
 
 const INITIAL_WINDOWS = [
   { id: "about", title: "About Me.txt", position: { x: 120, y: 80 }, zIndex: 1, isOpen: true, isMinimized: false },
@@ -72,6 +73,7 @@ function App() {
             onMinimize={() => minimizeWindow(w.id)}
           />
         ))}
+        <Taskbar />
     </div>
   );
 }

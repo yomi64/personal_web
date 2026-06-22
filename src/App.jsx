@@ -2,6 +2,8 @@ import { useState } from "react";
 import Desktop from "./components/Desktop.jsx";
 import Window from "./components/Window.jsx";
 import Taskbar from "./components/Taskbar.jsx";
+import StartMenu from "./components/StartMenu.jsx";
+
 
 const INITIAL_WINDOWS = [
   { id: "about", title: "About Me.txt", position: { x: 120, y: 80 }, zIndex: 1, isOpen: true, isMinimized: false },
@@ -11,6 +13,7 @@ const INITIAL_WINDOWS = [
 function App() {
   const [windows, setWindows] = useState(INITIAL_WINDOWS);
   const [topZIndex, setTopZIndex] = useState(2);
+  const [isStartOpen, setIsStartOpen] = useState(false);
 
   function handlePositionChange(id, newPosition) {
     setWindows((prevWindows) =>
@@ -115,7 +118,14 @@ function App() {
           windows={windows}
           topZIndex={topZIndex}
           onTaskbarButtonClick={handleTaskbarButtonClick}
+          onStartClick={() => setIsStartOpen((open) => !open)}
         />
+        {isStartOpen && (
+          <StartMenu
+            onOpenApp={openWindow}
+            onClose={() => setIsStartOpen(false)}
+          />
+        )}
     </div>
   );
 }

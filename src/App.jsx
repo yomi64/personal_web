@@ -3,8 +3,8 @@ import Desktop from "./components/Desktop.jsx";
 import Window from "./components/Window.jsx";
 
 const INITIAL_WINDOWS = [
-  { id: "about", title: "About Me.txt", position: { x: 120, y: 80 }, zIndex: 1, isOpen: true },
-  { id: "projects", title: "My Projects", position: { x: 220, y: 140 }, zIndex: 2, isOpen: true },
+  { id: "about", title: "About Me.txt", position: { x: 120, y: 80 }, zIndex: 1, isOpen: true, isMinimized: false },
+  { id: "projects", title: "My Projects", position: { x: 220, y: 140 }, zIndex: 2, isOpen: true, isMinimized: false },
 ];
 
 function App() {
@@ -40,17 +40,25 @@ function App() {
   function openWindow(id) {
     setWindows((prevWindows) =>
       prevWindows.map((w) =>
-        w.id === id ? { ...w, isOpen: true } : w
+        w.id === id ? { ...w, isOpen: true, isMinimized: false } : w
       )
     );
     focusWindow(id);
+  }
+
+  function minimizeWindow(id) {
+    setWindows((prevWindows) =>
+      prevWindows.map((w) =>
+        w.id === id ? { ...w, isMinimized: true } : w
+      )
+    );
   }
 
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <Desktop onOpenWindow={openWindow} />
       {windows
-        .filter((w) => w.isOpen)
+        .filter((w) => w.isOpen && !w.isMinimized)
         .map((w) => (
           <Window
             key={w.id}
@@ -61,7 +69,7 @@ function App() {
             onPositionChange={(newPosition) => handlePositionChange(w.id, newPosition)}
             onFocus={() => focusWindow(w.id)}
             onClose={() => closeWindow(w.id)}
-            onMinimize={() => console.log(`minimize ${w.id}`)}
+            onMinimize={() => minimizeWindow(w.id)}
           />
         ))}
     </div>
